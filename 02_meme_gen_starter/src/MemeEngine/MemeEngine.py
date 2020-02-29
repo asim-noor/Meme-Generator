@@ -1,8 +1,17 @@
 from PIL import Image, ImageDraw, ImageFont
+import os
 
 class MemeEngine():
 
-    def make_meme(self, img_path, text, author, width) -> str:
+    def __init__(self,dirName):
+        # Create target Directory if don't exist
+        if not os.path.exists(dirName):
+            os.mkdir(dirName)
+            print("Directory ", dirName, " Created ")
+        else:
+            print("Directory ", dirName, " already exists")
+
+    def make_meme(self, img_path, text, author) -> str:
         """Create a Meme  With an inspiring Quote
 
         Arguments:
@@ -13,8 +22,11 @@ class MemeEngine():
         Returns:
             str -- the file path to the output image.
         """
+        print(img_path, text, author)
         try:
             with Image.open(img_path) as im:
+                print(im.size)
+                width = 500
                 (img_width, img_height) = im.width, im.height
                 height = int (500 *(img_height/img_width))
                 resized_image = im.resize((width, height))
