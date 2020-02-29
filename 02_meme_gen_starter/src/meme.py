@@ -1,5 +1,9 @@
 import os
 import random
+import argparse
+from QuoteEngine import Ingestor
+from QuoteEngine import QuoteModel
+from MemeEngine import MemeEngine
 
 # @TODO Import your Ingestor and MemeEngine classes
 
@@ -34,8 +38,10 @@ def generate_meme(path=None, body=None, author=None):
             raise Exception('Author Required if Body is Used')
         quote = QuoteModel(body, author)
 
-    meme = MemeEngine('./tmp')
-    path = meme.make_meme(img, quote.body, quote.author)
+    #meme = MemeEngine('./tmp')
+    meme = MemeEngine()
+    path = meme.make_meme(path, quote.body, quote.author)
+    print(path)
     return path
 
 
@@ -44,5 +50,15 @@ if __name__ == "__main__":
     # path - path to an image file
     # body - quote body to add to the image
     # author - quote author to add to the image
-    args = None
-    print(generate_meme(args.path, args.body, args.author))
+    parser = argparse.ArgumentParser(description = 'Generate a Meme')
+    parser.add_argument('path', type=str)
+    parser.add_argument('body', type=str, default="I am man of few words", help="Write a quote")
+    parser.add_argument('author', type=str, default="philosopher", help="who wrote the quote")
+    args = parser.parse_args()
+    path = args.path
+    body = args.body
+    author = args.author
+    print(path, body,author)
+    #args = None
+    generate_meme(args.path, args.body, args.author)
+
