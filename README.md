@@ -1,37 +1,56 @@
-## Welcome to GitHub Pages
+# Motivational Puppy Meme Generator
 
-You can use the [editor on GitHub](https://github.com/udacity/PYND/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+## Udacity - Intermediate Python Nanodegree
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+This project builds a "meme generator"—a multimedia application to dynamically generate memes, including an image with an overlaid quote. You can use it in browser or through command line interface.  
 
-### Markdown
+![demo gif](./demo.gif)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Instruction for Use
 
-```markdown
-Syntax highlighted code block
+Install the dependencies given in the requirement text. Run app.py for web version or run main.py for CLI version. 
+The utility can be which can be run from the terminal by invoking `python3 main.py`
 
-# Header 1
-## Header 2
-### Header 3
+The script must take three _optional_ CLI arguments:
 
-- Bulleted
-- List
+- `--body` a string quote body
+- `--author` a string quote author
+- `--path` an image path
 
-1. Numbered
-2. List
+The script returns a path to a generated image.
+If any argument is not defined, a random selection is used. 
 
-**Bold** and _Italic_ and `Code` text
+app.py runs with the a basic flask server which consumes the modules and make it usable through a web interface. The main code for this flask service is in `app.py`, templates are in `templates/` and generated images are saved to `static` directory. 
 
-[Link](url) and ![Image](src)
-```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+### Quote Engine Module
 
-### Jekyll Themes
+The Quote Engine Module is responsible for ingesting many types of files that contain quotes. A quote contains a body and an author (e.g. "this is a quote body" - Author). This module is composed of many classes. 
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/udacity/PYND/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+QuoteEngine Module contains following classes:
 
-### Support or Contact
+- __init.py
+- CSVImporter
+- DocxImporter
+- PDFImporter
+- TXTImporter
+- IngestorInterface
+- Ingestor
+- QuoteModel
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+
+### Meme Engine Module
+
+The Meme Engine Module is responsible for manipulating and drawing text onto images.
+
+MemeEngine module contains MemeEngine class.
+
+The class is responsible for:
+1. loading an image using Pillow (PIL)
+2. resizing the image so the width is at most 500px and the height is scaled proportionally
+3. add a quote body and a quote author to the image
+4. saving the manipulated image
+5. the class implements this instance method signature which returns the path to the manipulated image `make_meme(self, img_path, text, author, width=500) -> str`
+
+
+
